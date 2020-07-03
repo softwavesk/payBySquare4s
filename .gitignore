@@ -1,0 +1,14 @@
+/project/project
+/project/target
+.classpath
+.cache
+/target
+/.settings
+/.target
+/.project
+.scala_dependencies
+.DS_Store
+/.idea
+/.idea_modules
+.sbtopts
+target/
