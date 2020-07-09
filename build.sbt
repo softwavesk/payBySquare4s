@@ -2,9 +2,12 @@ import sbtassembly.AssemblyPlugin.autoImport._
 
 ThisBuild / organization := "sk.softwave"
 ThisBuild / name := "payBySquare4s"
-ThisBuild / version := "1.0"
+ThisBuild / version := "1.0.1"
 
-ThisBuild / scalaVersion := "2.13.2"
+ThisBuild / scalaVersion := "2.13.3"
+
+val buildScalaVersion = "2.13.3"
+val scala212 = "2.12.10"
 
 scalafmtOnCompile in ThisBuild := true
 
@@ -18,7 +21,8 @@ val dependencies = Seq(
 
 lazy val core = (project in file("."))
   .settings(Defaults.coreDefaultSettings,
-    libraryDependencies ++= dependencies
+    libraryDependencies ++= dependencies,
+    crossScalaVersions := Seq(buildScalaVersion, scala212)
   )
 
 lazy val app = Project(id="app", base=file("app"))
