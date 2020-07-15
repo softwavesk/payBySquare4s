@@ -1,2 +1,2 @@
 install:
-  - sbt -Dsbt.log.noformat=true `echo $ARTIFACT | sed 's/.*2.12$/++2.12.12/;s/.*2.13$/++2.13.3/'` clean publishM2
+  - sbt -Dsbt.log.noformat=true `echo $ARTIFACT | sed 's/.*2.12$/++2.12.12/;s/.*2.13$/++2.13.3/;/^\+\+/! s/.*//'` clean publishM2
