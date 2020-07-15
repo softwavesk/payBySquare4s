@@ -19,7 +19,7 @@ val dependencies = Seq(
   "org.scalatest" %% "scalatest" % "3.2.0" % "test"
 )
 
-lazy val core = (project in file("."))
+lazy val core = Project(id="payBySquare4s", base=file("."))
   .settings(Defaults.coreDefaultSettings,
     libraryDependencies ++= dependencies,
     crossScalaVersions := Seq(buildScalaVersion, scala212)
