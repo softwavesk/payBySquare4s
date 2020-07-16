@@ -16,7 +16,7 @@ resolvers += "jitpack" at "https://jitpack.io"
 libraryDependencies += "sk.softwave" %% "paybysquare4s" % "1.0.1"
 ```
 
-## Usage
+## Usage - library
 
 PayBySquare QR code with the official frame:
 
@@ -56,3 +56,43 @@ It is also advised that either `vs`+`ss`+`ks` combination or `reference` is used
 in general undefined what takes preference (up to a bank that will scan the QR code)
 
 For more complex payments (eg. if choice of mulitple bank accounts is to be offered), `Pay` trait needs to be extended *(note: I might provide some more straight forward case class for this purpose if there will be an interest)*
+
+## Commandline app
+
+Commandline app (available via [releases](https://github.com/softwavesk/payBySquare4s/releases) ) provides an ability to generate PayBySquare QR codes
+from any application capable of executing external commandline application with parameters. It comes as JAR (multi-platform), 
+as well as convenient EXE wrapper for Windows (requires Java 8+ installed, JRE is not bundled)
+
+Usage:
+
+```
+java -jar payBySquareApp.jar <payload> <output-file>
+```                                                 
+
+or on Windows:
+
+```
+payBySquareApp.exe <payload> <output-file>
+```                                                 
+
+`payload` is a semi-colon delimited data structure of paymant data (only one payment and one bank account are supported):
+
+```
+<amount>;<currency>;<vs>;<ss>;<ks>;<reference>;<paymentNote>;<iban>;<bic>
+```                                                                      
+
+Mandatory parameters are `amount`, `currency` and `iban`, to omit optional parameter, one simply uses empty string as it's value.
+
+`output-file` is a path where resulting PNG file should be stored.
+
+Launching application with a single `--help` parameter will display simple help information.
+
+### Examples
+
+```
+java -jar payBySquareApp.jar "31.5;EUR;123;;;;platba - test;SK4281800000007000221411;SPSRSKBA" ~/Desktop/qr-payment.png
+```                                                                                                            
+
+```
+payBySquareApp.exe "31.5;EUR;123;;;;platba - test;SK4281800000007000221411;SPSRSKBA" C:\Users\myuser\Desktop\qr-payment.png
+```
