@@ -2,7 +2,7 @@ import sbtassembly.AssemblyPlugin.autoImport._
 
 ThisBuild / organization := "sk.softwave"
 ThisBuild / name := "payBySquare4s"
-ThisBuild / version := "1.0.1"
+ThisBuild / version := "1.0.2"
 
 ThisBuild / scalaVersion := "2.13.3"
 

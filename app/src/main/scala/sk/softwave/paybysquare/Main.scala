@@ -22,7 +22,7 @@ object Main extends App {
     println(usageStr)
     sys.exit(1)
   } else {
-    val data = toEncode.replace("\\;", 0.toChar.toString).split(";").map(_.replace(0.toChar, ';'))
+    val data = toEncode.replace("\\;", 0.toChar.toString).split(";", -1).map(_.replace(0.toChar, ';'))
     if (data.size != 9) {
       println(payloadUsageStr)
       println(data.size)
