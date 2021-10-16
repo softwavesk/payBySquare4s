@@ -5,14 +5,14 @@ import java.awt.image.BufferedImage
 import java.io.{ ByteArrayOutputStream, File, InputStream }
 import java.nio.{ ByteBuffer, ByteOrder }
 import java.util.zip.CRC32
-
-import com.google.zxing.BarcodeFormat
+import com.google.zxing.{ BarcodeFormat, EncodeHintType }
 import com.google.zxing.client.j2se.MatrixToImageWriter
 import com.google.zxing.qrcode.QRCodeWriter
 import javax.imageio.ImageIO
 import org.apache.commons.codec.binary.Base32
 import org.tukaani.xz.{ LZMA2Options, LZMAOutputStream }
 import sk.softwave.helpers.ImageHelpers
+import scala.jdk.CollectionConverters._
 
 trait PayBySquare {
 
@@ -58,22 +58,22 @@ trait PayBySquare {
     }
   }
 
-  def encodePlainQR(pay: Pay, filePath: String, size: Int = 300): Unit = {
-    val qrImg = generateQR(encode(pay), size)
+  def encodePlainQR(pay: Pay, filePath: String, size: Int = 300, margin: Int = 4): Unit = {
+    val qrImg = generateQR(encode(pay), size, margin)
     val imgFile = new File(sanitizePath(filePath))
     ImageHelpers.saveAsPNG(qrImg, imgFile, 144)
   }
 
   def encodeFrameQR(pay: Pay, filePath: String): Unit = {
-    val qrImg = generateQR(encode(pay), 300)
+    val qrImg = generateQR(encode(pay), 240, 0)
     val imgFile = new File(sanitizePath(filePath))
 
     val frameIs = getResourceAsStream("payBySquareFrame-grey.png")
     val frame = ImageIO.read(frameIs)
-    val combined = new BufferedImage(320, 374, BufferedImage.TYPE_INT_ARGB)
+    val combined = new BufferedImage(288, 336, BufferedImage.TYPE_INT_ARGB)
     val g = combined.getGraphics().asInstanceOf[Graphics2D]
     g.drawImage(frame, 0, 0, null)
-    g.drawImage(qrImg, 10, 10, null)
+    g.drawImage(qrImg, 24, 24, null)
     ImageHelpers.saveAsPNG(combined, imgFile, 144)
     g.dispose()
 
@@ -84,9 +84,10 @@ trait PayBySquare {
     classloader.getResourceAsStream(resourceName)
   }
 
-  private def generateQR(toEncode: String, size: Int): BufferedImage = {
+  private def generateQR(toEncode: String, size: Int, margin: Int = 4): BufferedImage = {
     val qrCodeWriter = new QRCodeWriter()
-    val bitMatrix = qrCodeWriter.encode(toEncode, BarcodeFormat.QR_CODE, size, size)
+    val hints = Map(EncodeHintType.MARGIN -> margin)
+    val bitMatrix = qrCodeWriter.encode(toEncode, BarcodeFormat.QR_CODE, size, size, hints.asJava)
     MatrixToImageWriter.toBufferedImage(bitMatrix)
   }
 

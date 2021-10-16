@@ -2,7 +2,7 @@ import sbtassembly.AssemblyPlugin.autoImport._
 
 ThisBuild / organization := "sk.softwave"
 ThisBuild / name := "payBySquare4s"
-ThisBuild / version := "1.0.2"
+ThisBuild / version := "1.0.3"
 
 ThisBuild / scalaVersion := "2.13.3"
 
@@ -12,7 +12,6 @@ val scala212 = "2.12.10"
 scalafmtOnCompile in ThisBuild := true
 
 val dependencies = Seq(
-  //"org.apache.commons" % "commons-compress" % "1.20",
   "org.tukaani" % "xz" % "1.8",
   "commons-codec" % "commons-codec" % "1.14",
   "com.google.zxing" % "javase" % "3.4.0",

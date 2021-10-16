@@ -13,7 +13,7 @@ In `build.sbt`, add the JitPack resolver and the [latest library dependency](htt
 
 ```scala
 resolvers += "jitpack" at "https://jitpack.io"
-libraryDependencies += "sk.softwave" %% "paybysquare4s" % "1.0.1"
+libraryDependencies += "sk.softwave" %% "paybysquare4s" % "1.0.3"
 ```
 
 ## Usage - library
@@ -41,8 +41,8 @@ Plain QR code without frame:
 ```scala
 PayBySquare.encodePlainQR(pay, "/path/to/store/qr-file.png") 
 
-//or with explicit size param (default == 300)
-PayBySquare.encodePlainQR(pay, "/path/to/store/qr-file.png", size = 250) 
+//or with explicit size param (default == 300) or margin param (default == 4)
+PayBySquare.encodePlainQR(pay, "/path/to/store/qr-file.png", size = 250, margin = 4) 
 ```
 
 Plain PayBySquare string (to be used in your own QR generator for example):
